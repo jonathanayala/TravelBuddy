@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Travel Dashboard</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'main/css/style.css' %}" media-"screen" title="no title" charset="utf-8">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <br>
+                    <h5 style="text-align: right"><a class="btn btn-link" role="button" href="{% url 'logout' %}">Logout</a></h5>
+                </div>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-lg">
+                    <h1>Hola, <b>{{ user.name }} !</b></h1>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <h5>Your Trip Schedules</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th scope="col">Desination</th>
+                            <th scope="col">Travel Start Date</th>
+                            <th scope="col">Travel End Date</th>
+                            <th scope="col">Plan</th>
+                        </thead>
+                        <tbody>
+                            {% if travels %}
+                                {% for travel in travels %}
+                                    {% if travel.creator.id == user.id %}
+                            <tr>
+                                <th scope="row"><a href="/show/{{ travel.id }}">{{ travel.destination }}</a></th>
+                                <td>{{ travel.start }}</td>
+                                <td>{{ travel.end }}</td>
+                                <td>{{ travel.description }}</td>
+                            </tr>
+                                    {% endif %}
+                                        {% for everyuser in travel.join.all %}
+                                            {% if everyuser.id == user.id %}
+                            <tr>
+                                <th scope="row"><a href="/show/{{travel.id}}">{{ travel.destination }}</a></td>
+                                <td>{{ travel.start }}</td>
+                                <td>{{ travel.end }}</td>
+                                <td>{{ travel.description }}</td>
+                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <h5>Other User's Travel Plans</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th scope="col">Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Travel Start Date</th>
+                            <th scope="col">Travel End Date</th>
+                            <th scope="col">Do You Want to Join?</th>
+                        </thead>
+                        <tbody>
+                            {% if travels %}
+                                {% for travel in others %}
+                            <tr>
+                                <th scope="row">{{ travel.creator.name }}</td>
+                                <td><a href="/show/{{ travel.id }}">{{ travel.destination }}</a></td>
+                                <td>{{ travel.start }}</td>
+                                <td>{{ travel.end }}</td>
+                                    {% if user !=  travel.creator %}
+                                <form action="/join/{{ travel.id }}" method="POST">
+                                    {% csrf_token %}
+                                    <td><input class="btn btn-link" type="Submit" name="join" value="Join"></td>
+                                </form>
+                                    {% endif %}
+                            </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <h5 style="text-align: right"><a class="btn btn-link" role="button" href="{% url 'add_plan' %}">Add Travel Plan</a></h5>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
