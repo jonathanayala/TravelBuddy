@@ -13,7 +13,7 @@ class userManager(models.Manager):
             errors.append("Name needs to be more than 3 letter")
 
         if postData['name'].replace(' ','').isalpha() == False:
-            errors['name'] = "First name cannot contain numbers"
+            errors.append("First name cannot contain numbers")
 
         if len(User.objects.filter(username = postData['username'])) > 0:
             errors.append("Username already exists")
@@ -25,8 +25,8 @@ class userManager(models.Manager):
             errors.append("Password needs to be more than 8 letters")
 
         if len(errors) == 0:
-            newuser = User.objects.create(name= postData['name'], username= postData['username'], password= bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt()))
-            return (True, newuser)
+            new_user = User.objects.create(name= postData['name'], username= postData['username'], password= bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt()))
+            return (True, new_user)
         else:
             return (False, errors)
 
