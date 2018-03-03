@@ -3,9 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>Add Plan</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         {% load static %}
-        <link rel="stylesheet" href="{% static 'main/css/style.css' %}" media-"screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}" media-"screen" title="no title" charset="utf-8">
     </head>
     <body>
         <h5 style="text-align: right"><a class="btn btn-link" href="{% url 'logout' %}" style="margin: 20px">Log out</a> | <a class="btn btn-link" href="{% url 'travel' %}" style="margin: 20px">Home</a></h5>
@@ -19,7 +18,7 @@
                     {% if messages %}
                         <ul>
                         {% for message in messages %}
-                            <li style="color:darkred">{{ message }}</li>
+                            <li style="color: darkred">{{ message }}</li>
                         {% endfor %}
                         </ul>
                     {% endif %}

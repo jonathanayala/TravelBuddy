@@ -3,9 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>Travel Dashboard</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         {% load static %}
-        <link rel="stylesheet" href="{% static 'main/css/style.css' %}" media-"screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}" media-"screen" title="no title" charset="utf-8">
     </head>
     <body>
         <div class="container">
@@ -43,7 +42,7 @@
                                 {% for travel in travels %}
                                     {% if travel.creator.id == user.id %}
                             <tr>
-                                <th scope="row"><a href="/show/{{ travel.id }}">{{ travel.destination }}</a></th>
+                                <th scope="row"><a href='{% url 'show' travel_id=travel.id %}'>{{ travel.destination }}</a></th>
                                 <td>{{ travel.start }}</td>
                                 <td>{{ travel.end }}</td>
                                 <td>{{ travel.description }}</td>
@@ -52,7 +51,7 @@
                                         {% for everyuser in travel.join.all %}
                                             {% if everyuser.id == user.id %}
                             <tr>
-                                <th scope="row"><a href="/show/{{travel.id}}">{{ travel.destination }}</a></td>
+                                <th scope="row"><a href='{% url 'show' travel_id=travel.id %}'>{{ travel.destination }}</a></td>
                                 <td>{{ travel.start }}</td>
                                 <td>{{ travel.end }}</td>
                                 <td>{{ travel.description }}</td>
